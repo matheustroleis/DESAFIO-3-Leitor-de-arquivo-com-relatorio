@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leitor De Arquivo Com Relatorio", "Leitr De Arquivo Com Relatorio\Leitor De Arquivo Com Relatorio.csproj", "{623FEC22-F321-406E-8D8C-62C3C1099879}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leitr De Arquivo Com Relatorio", "Leitr De Arquivo Com Relatorio\Leitr De Arquivo Com Relatorio.csproj", "{623FEC22-F321-406E-8D8C-62C3C1099879}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
