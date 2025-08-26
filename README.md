@@ -1,34 +1,56 @@
-LEITOR DE ARQUIVO DE PRODUTOS COM RELATÓRIO
+📦 Leitor de Arquivo de Produtos com Relatório
+Este é um sistema de console em C# projetado para gerenciar um inventário de produtos. A aplicação simula funcionalidades básicas de um ERP, permitindo a importação de dados via CSV, consultas interativas, geração de relatórios detalhados e operações CRUD (Criar, Ler, Atualizar, Deletar) em memória.
 
+✨ Funcionalidades Principais
+Importação de Dados: Carregue produtos de forma massiva a partir de um arquivo .csv.
 
-Console em C# capaz de gerenciar produtos de um estoque, realizando a importação de dados via CSV, 
-permitindo consultas interativas, relatórios detalhados e até operações CRUD em memória.
+Gerenciamento Dinâmico: Adicione, atualize e remova produtos em tempo de execução.
 
-Esse sistema vai simular parte de um ERP simples, permitindo ao usuário:
--Importar produtos
--Adicionar e remover produtos dinamicamente
--Consultar produtos filtrando por nome, categoria, ou faixa de preço
--Gerar relatórios 
--Exportar os relatórios em formato .txt
- 
-IMPORTAÇÃO DE DADOS:
--Leitura do arquivo produtos_3.csv
--Criação de objetos Produto
--Validação de linhas (campos ausentes, valores inválidos, etc.)
--Uso de exceções personalizadas como FormatoInvalidoException
+Consultas Avançadas: Filtre produtos por nome, categoria ou faixa de preço.
 
-OPERAÇÕES CRUD:
-Adicionar novo produto via console
-Atualizar produto existente
-Escolher produto por nome
-Escolher qual parte do produto atualizar (Nome, Preço ou Categoria)
-Remover produto
-Listar todos os produtos cadastrados
+Relatórios Detalhados: Gere resumos analíticos do seu inventário.
 
-RELATÓRIOS:
--Gerar relatório de resumo (relatorio.txt) com:
--total de produtos lidos
--produto mais caro
--média de preços
-cada um desses relatórios pode ser feito considerando todos os produtos, ou filtrando por categoria
-antes de gerar um relatório o usuário vai poder escolher pelo console como vai ser o relatório
+Exportação Simples: Salve os relatórios gerados em formato .txt.
+
+🚀 Como Funciona
+📂 Importação de Dados (produtos_3.csv)
+O sistema inicia lendo o arquivo produtos_3.csv, convertendo cada linha em um objeto Produto. Durante a importação, são realizadas validações para garantir a integridade dos dados:
+
+Validação de Linhas: Verifica se há campos ausentes ou valores inválidos.
+
+Tratamento de Erros: Utiliza exceções personalizadas, como FormatoInvalidoException, para lidar com dados malformados de maneira robusta.
+
+🛠️ Operações CRUD em Memória
+Gerencie seu catálogo de produtos diretamente pelo console com as seguintes operações:
+
+Adicionar: Insira um novo produto fornecendo suas informações.
+
+Listar: Visualize todos os produtos cadastrados.
+
+Atualizar:
+
+Escolha um produto pelo nome.
+
+Selecione o campo que deseja alterar (Nome, Preço ou Categoria).
+
+Informe o novo valor.
+
+Remover: Exclua um produto do inventário.
+
+📊 Geração de Relatórios
+Crie um relatório de resumo (relatorio.txt) com métricas importantes sobre o seu estoque. Antes de gerar, o sistema permite que você escolha o escopo dos dados:
+
+Relatório Completo: Analisa todos os produtos cadastrados.
+
+Relatório por Categoria: Filtra os dados para uma categoria específica antes de calcular as métricas.
+
+O relatório gerado inclui:
+
+Total de Produtos: Contagem total de itens no escopo selecionado.
+
+Produto Mais Caro: Detalhes do produto com o maior preço.
+
+Média de Preços: O valor médio dos produtos analisados.
+
+🛠️ Tecnologias Utilizadas
+Linguagem: C# (.NET)
