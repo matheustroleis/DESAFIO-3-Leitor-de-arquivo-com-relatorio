@@ -13,6 +13,7 @@ Relatórios Detalhados: Gere resumos analíticos do seu inventário.
 Exportação Simples: Salve os relatórios gerados em formato .txt.
 
 🚀 Como Funciona
+
 📂 Importação de Dados (produtos_3.csv)
 O sistema inicia lendo o arquivo produtos_3.csv, convertendo cada linha em um objeto Produto. Durante a importação, são realizadas validações para garantir a integridade dos dados:
 
@@ -29,11 +30,11 @@ Listar: Visualize todos os produtos cadastrados.
 
 Atualizar:
 
-Escolha um produto pelo nome.
+1.Escolha um produto pelo nome.
 
-Selecione o campo que deseja alterar (Nome, Preço ou Categoria).
+2.Selecione o campo que deseja alterar (Nome, Preço ou Categoria).
 
-Informe o novo valor.
+3.Informe o novo valor.
 
 Remover: Exclua um produto do inventário.
 
@@ -46,11 +47,11 @@ Relatório por Categoria: Filtra os dados para uma categoria específica antes d
 
 O relatório gerado inclui:
 
-Total de Produtos: Contagem total de itens no escopo selecionado.
+-Total de Produtos: Contagem total de itens no escopo selecionado.
 
-Produto Mais Caro: Detalhes do produto com o maior preço.
+-Produto Mais Caro: Detalhes do produto com o maior preço.
 
-Média de Preços: O valor médio dos produtos analisados.
+-Média de Preços: O valor médio dos produtos analisados.
 
 🛠️ Tecnologias Utilizadas
 Linguagem: C# (.NET)
