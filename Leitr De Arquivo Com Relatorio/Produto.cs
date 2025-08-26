@@ -17,6 +17,6 @@ internal class Produto
 
     public override string ToString()
     {
-        return $" Nome: {Nome} | Preço: R${Preco:C} | Categoria: {Categoria}";
+        return $" Nome: {Nome} | Preço: {Preco:C} | Categoria: {Categoria}";
     }
 }

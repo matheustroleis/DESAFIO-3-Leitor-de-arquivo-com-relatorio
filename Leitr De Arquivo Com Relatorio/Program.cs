@@ -33,42 +33,52 @@ class Program
                 switch (opcao)
                 {
                     case "1":
-                        gerenciador.ImportarArquivo("produtos_3.csv");
-                        Console.WriteLine("Importação concluída. Produtos válidos foram carregados.");
+                        ImportarArquivo();
                         break;
                     case "2":
-                        AdicionarProdutoNovo();
+                        gerenciador.AdicionarProduto();
                         break;
                     case "3":
+                        gerenciador.RemoverProduto();
                         break;
-                        
                     case "4":
+                        gerenciador.AtualizarProduto();
                         break;
-                        
                     case "5":
                         gerenciador.ListarProdutos();
                         break;
                     case "6":
+                        gerenciador.ConsultarProdutos();
                         break;
                     case "7":
+                        gerenciador.GerarRelatorio();
                         break;
+                    case "8":
+                        Console.WriteLine("Fechando Aplicação...");
+                        Thread.Sleep(2000);
+                        return;
                 }
             }
         }
-       
-        void AdicionarProdutoNovo()
+
+        void ImportarArquivo()
         {
-            Console.Write("Nome do produto: ");
-            var nome = Console.ReadLine();
-            Console.Write("Preço do produto (use , como separador): ");
-            var preco = decimal.Parse(Console.ReadLine());
-            Console.Write("Categoria do produto: ");
-            var categoria = Console.ReadLine();
-
-            var produto = new Produto(nome, preco, categoria);
-            gerenciador.AdicionarProduto(produto);
+            try
+            {
+                gerenciador.ImportarProdutos("produtos_3.csv");
+                Console.WriteLine($"\nImportação concluída. {gerenciador.Produtos.Count} produtos válidos foram carregados.");
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("Arquivo produtos_3.csv não encontrado");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\nOcorreu um erro inesperado durante a importação: {ex.Message}");
+            }
+            Console.WriteLine("Pressione qualquer tecla para gerenciar o arquivo...");
+            Console.ReadKey();
+            Console.Clear();
         }
-
-
     }
 }
