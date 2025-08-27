@@ -37,7 +37,7 @@ internal class GerenciadorDeEstoque
 
                 string nome = colunas[0];
 
-                if (nome.ToLower().Contains("erro"))
+                if (nome.ToLower().Contains("erro") || nome.ToLower().Contains("erradas"))
                 {
                     throw new FormatoInvalidoException($"O nome do produto na linha {i + 1} foi identificado como um erro ('{nome}').");
                 }
@@ -51,7 +51,7 @@ internal class GerenciadorDeEstoque
                 }
 
                 string categoria = colunas[2];
-               
+
                 var produtoImportacao = new Produto(nome, preco, categoria);
 
                 Produtos.Add(produtoImportacao);
@@ -81,7 +81,7 @@ internal class GerenciadorDeEstoque
 
         decimal preco;
         Console.Write("\nPreço do produto (use . como separador decimal): ");
-        while (!decimal.TryParse(Console.ReadLine() ?? "", CultureInfo.InvariantCulture, out preco) || preco < 0)
+        while (!decimal.TryParse(Console.ReadLine(), CultureInfo.InvariantCulture, out preco) || preco < 0)
         {
             Console.WriteLine("\nPreço inválido ou negativo. Por favor, insira um preço válido.");
             Console.Write("Preço do produto (use . como separador decimal): ");
@@ -97,7 +97,7 @@ internal class GerenciadorDeEstoque
         }
 
         var produto = new Produto(nome, preco, categoria);
-        
+
         Produtos.Add(produto);
         Console.WriteLine($"\nProduto {produto.Nome} adicionado com sucesso");
         Console.WriteLine("\nPressione qualquer tecla para VOLTAR AO MENU...");
@@ -113,6 +113,7 @@ internal class GerenciadorDeEstoque
             Console.WriteLine("Nenhum produto cadastrado.");
             Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
+            Console.Clear();
             return;
         }
 
@@ -138,7 +139,7 @@ internal class GerenciadorDeEstoque
             Console.WriteLine("Não há produtos no estoque para remover.");
             Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
-            return; 
+            return;
         }
 
         Console.WriteLine("Produtos disponíveis:");
@@ -153,7 +154,7 @@ internal class GerenciadorDeEstoque
         var produtoEncontrado = Produtos.FirstOrDefault(p => p.Nome.Equals(nomeParaRemover)); //FirstOrDefault -> retorna o primeiro valor encontrado
 
         if (produtoEncontrado != null)
-        { 
+        {
             Produtos.Remove(produtoEncontrado);
             Console.WriteLine("\nProduto removido com sucesso!");
         }
@@ -190,16 +191,17 @@ internal class GerenciadorDeEstoque
 
         var produtoParaAtualizar = Produtos.FirstOrDefault(p => p.Nome.Equals(nomeParaAtualizar));
 
-        
+
         if (produtoParaAtualizar != null) // Se encontramos o produto, pedimos os novos dados
         {
-            
+
             Console.WriteLine("\nDigite os novos dados para o produto (deixe em branco para não alterar).");
 
             Console.Write($"Novo nome ({produtoParaAtualizar.Nome}): ");
             string novoNome = Console.ReadLine();
 
-            Console.Write($"Novo preço (use , como separador)({produtoParaAtualizar.Preco:C}): ");
+
+            Console.Write($"Novo preço (use . como separador)({produtoParaAtualizar.Preco:C}): ");
             string novoPreco = Console.ReadLine();
 
             Console.Write($"Nova categoria ({produtoParaAtualizar.Categoria}): ");
@@ -212,7 +214,7 @@ internal class GerenciadorDeEstoque
 
             if (!string.IsNullOrWhiteSpace(novoPreco))
             {
-                if (decimal.TryParse(novoPreco, out decimal precoAtualizado))
+                if (decimal.TryParse(novoPreco, CultureInfo.InvariantCulture, out decimal precoAtualizado))
                 {
                     produtoParaAtualizar.Preco = precoAtualizado;
                 }
@@ -241,7 +243,7 @@ internal class GerenciadorDeEstoque
 
     public void ConsultarProdutos()
 
-    
+
     {
         while (true)
         {
@@ -296,7 +298,7 @@ internal class GerenciadorDeEstoque
                     sair = true;
                     break;
             }
-            
+
             if (sair)
             {
                 Console.Clear();
@@ -314,7 +316,7 @@ internal class GerenciadorDeEstoque
             }
             else
             {
-               Console.WriteLine("\nNenhum produto encontrado com o critério informado.");
+                Console.WriteLine("\nNenhum produto encontrado com o critério informado.");
             }
 
             Console.WriteLine("\nPressione qualquer tecla para VOLTAR AO MENU...");
@@ -326,5 +328,97 @@ internal class GerenciadorDeEstoque
     public void GerarRelatorio()
     {
 
+
+        //total de produtos lidos
+        //produto mais caro
+        //média de preço
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("\n--- Menu de Relatório  ---");
+
+            if (Produtos.Count == 0)
+            {
+                Console.WriteLine("Não há produtos no estoque para consultar.");
+                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu principal...");
+                Console.ReadKey();
+                Console.Clear();
+                return;
+            }
+
+            Console.WriteLine("1. Relatório de Estoque Completo");
+            Console.WriteLine("2. Relatório por Categoria");
+            Console.WriteLine("3. Voltar ao Menu Principal");
+            Console.Write("Escolha uma opção: ");
+
+            var opcao = Console.ReadLine();
+            List<Produto> listaParaAnalise;
+            string tituloRelatorio;
+
+            
+            switch (opcao)
+            {
+                case "1":
+                    listaParaAnalise = Produtos;
+                    tituloRelatorio = "Relatório de Resumo de Todos os Produtos";
+                    break; 
+
+                case "2":
+                    Console.Write("Digite a categoria desejada: ");
+                    string categoriaBusca = Console.ReadLine() ?? "";
+                    listaParaAnalise = Produtos
+                        .Where(p => p.Categoria.Equals(categoriaBusca, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                    tituloRelatorio = $"Relatório de Resumo para a Categoria: '{categoriaBusca}'";
+                    break; 
+
+                case "3":
+                    Console.Clear();
+                    return; 
+
+                default:
+                    Console.WriteLine("Opção inválida. Pressione qualquer tecla para tentar novamente...");
+                    Console.ReadKey();
+                    continue; 
+            }
+
+            Console.Clear();
+
+            if (!listaParaAnalise.Any())
+            {
+                Console.WriteLine("Nenhum produto encontrado para o critério selecionado.");
+                Console.WriteLine("\nPressione qualquer tecla para continuar...");
+                Console.ReadKey();
+                Console.Clear();
+                return;
+            }
+
+            int totalProdutos = listaParaAnalise.Count;
+            Produto produtoMaisCaro = listaParaAnalise.OrderByDescending(p => p.Preco).FirstOrDefault(); //OrderByDescending -> OrdemDecrescente selecionando o maior número encontrado em preço
+            decimal mediaPrecos = listaParaAnalise.Average(p => p.Preco); 
+
+            
+            var relatorio = new StringBuilder(); // StringBuilder é uma classe auxiliar do C# criada especificamente para construir strings de forma eficiente
+            relatorio.AppendLine("--- Relatório de Resumo ---");
+            relatorio.AppendLine(tituloRelatorio);
+            relatorio.AppendLine("------------------------------------");
+            relatorio.AppendLine($"Total de Produtos: {totalProdutos}");
+            relatorio.AppendLine($"Produto Mais Caro: {produtoMaisCaro?.Nome} ({produtoMaisCaro?.Preco:C})");
+            relatorio.AppendLine($"Média de Preços: {mediaPrecos:C}");
+            relatorio.AppendLine("------------------------------------");
+            relatorio.AppendLine($"Gerado em: {DateTime.Now}");
+
+            
+            Console.WriteLine(relatorio.ToString());
+            File.WriteAllText("relatorio.txt", relatorio.ToString());
+
+            Console.WriteLine($"\nRelatório também salvo com sucesso em: {Path.GetFullPath("relatorio.txt")}");
+            Console.WriteLine("\nPressione qualquer tecla para continuar...");
+            Console.ReadKey();
+            Console.Clear();
+        }
     }
 }
+
+
